@@ -16,7 +16,8 @@ export default function Signin() {
         <div className='lg:w-[50%] md:w-[67%] '>
 
           <img src="./key.png"
-          className='w-full rounded-2xl' 
+          className='w-full rounded-2xl'
+          alt='key' 
           />
         </div>
         <div className='mx-auto w-full md:mt-6 lg:w-[40%] lg:ml-20 md:w-[67%] sm:my-5 '>

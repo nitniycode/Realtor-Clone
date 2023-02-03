@@ -13,6 +13,7 @@ export default function ForgetPassword() {
           <img 
             src='./key.png' 
             className='w-full rounded-2xl'
+            alt='Lock'
           />
         </div>
         <div className='mx-auto w-full md:mt-6 lg:w-[40%] lg:ml-20 md:w-[67%] sm:my-5 '>
