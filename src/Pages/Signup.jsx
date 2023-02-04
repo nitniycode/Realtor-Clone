@@ -132,7 +132,7 @@ export default function Signup() {
               <p className='font-bold mx-3'>OR</p>
             </div>
 
-            <Button title='Continue With Google' back='bg-red-500' pic='google' />
+            <Button type="button" click={true} title='Continue With Google' back='bg-red-500' pic='google' />
 
           </form>
         </div>
