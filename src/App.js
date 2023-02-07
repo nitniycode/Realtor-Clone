@@ -7,8 +7,8 @@ import Signup from './Pages/Signup';
 import Header from './components/Header'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Profile from './Pages/Profile';
-import PrivateRoutes from './components/PrivateRoutes';
+import PrivateRoutes from "./components/PrivateRoutes";
+import Profile from "./Pages/Profile";
 
 
 function App() {
