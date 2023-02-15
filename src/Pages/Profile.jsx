@@ -1,18 +1,40 @@
-import { getAuth } from 'firebase/auth'
+import { getAuth, updateProfile } from 'firebase/auth'
+import { doc, updateDoc } from 'firebase/firestore'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import {db} from '../Firebase'
 
 export default function Profile() {
     const auth=getAuth()
     const navigate=useNavigate()
     const [name,setName]=useState(auth.currentUser.displayName)
     const [email,setEmail]=useState(auth.currentUser.email)
+    const [edit,setEdit]=useState(false)
 
     function signOut(){
         auth.signOut();
         navigate('/')
         toast.info("Signed Out Successfully")
+    }
+
+    function onChange(e){
+        setName(e.target.value)
+    }
+
+    async function onSubmit(){
+        if(auth.currentUser.displayName!=name){
+            //Updating User Value in Firebase Authentication
+            updateProfile(auth.currentUser,{
+                displayName:name
+            })
+
+            await updateDoc(doc(db,"users",auth.currentUser.uid),{
+                name
+            })
+
+            toast.success("Profile Updated Successfully")
+        }
     }
   return (
     <>
@@ -23,8 +45,10 @@ export default function Profile() {
                 <form>
                     <input type="text"
                     value={name}
-                    disabled
-                    className='mb-6 text-xl w-full px-4 py-2 text-gray-700 border-gray-400 outline-none border-1 rounded focus:border-gray-600'
+                    onChange={onChange}
+                    disabled={!edit}
+
+                    className={`mb-6 text-xl w-full px-4 py-2 text-gray-700 border-gray-400 outline-none border-1 rounded focus:border-gray-600 ${edit && "bg-red-200 focus:bg-red-200"}`}
                     />
                     <input type="email"
                     value={email}
@@ -35,7 +59,16 @@ export default function Profile() {
 
                 <div className='flex justify-between text-lg'>
                     <p>Do you want to change your name ?  
-                        <span className='text-red-600 hover:text-red-800 cursor-pointer transition duration-200 ease-in-out'> Edit</span>
+                        <span 
+                        
+                        className='text-red-600 hover:text-red-800 cursor-pointer transition duration-200 ease-in-out'
+                        onClick={()=>{
+                            edit && onSubmit()
+                            setEdit((prevState)=>!prevState)
+                        }}
+                        >
+                            {edit?"Apply Changes":"Edit"}
+                        </span>
                     </p>
                     <p 
                     onClick={signOut}
